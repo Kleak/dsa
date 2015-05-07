@@ -3,6 +3,7 @@ import 'dart:html';
 import 'dart:convert';
 
 import 'package:polymer/polymer.dart';
+import 'package:core_elements/core_selector.dart';
 
 import 'package:charted/charted.dart';
 
@@ -50,6 +51,30 @@ class MainApp extends PolymerElement {
 
     q1();
     q2();
+    q3();
+    q4();
+    q5();
+    q6();
+    q7();
+    q8();
+    q9();
+    q10();
+    
+    window.onKeyUp.listen(_onKeyUp);
+  }
+  
+  _onKeyUp(KeyboardEvent ke) {
+    switch (ke.keyCode) {
+      case 37:
+        CoreSelector selector = this.$["header"];
+        selector.selectPrevious(false);
+        break;
+        
+      case 39:
+        CoreSelector selector = this.$["header"];
+        selector.selectNext(false);
+        break;
+    }
   }
 
   void drawSimpleBarChart(String selector, bool grouped) {
@@ -78,17 +103,9 @@ class MainApp extends PolymerElement {
     return JSON.decode(response.body);
   }
 
-  q2() async {
-    Map json = await getJSONForQuestion("2");
-
-    Iterable ODC = [
-      new ChartColumnSpec(label: "Number of years", type: ChartColumnSpec.TYPE_STRING),
-      new ChartColumnSpec(label: "q2a"),
-      new ChartColumnSpec(label: "q2b"),
-      new ChartColumnSpec(label: "q2c"),
-      new ChartColumnSpec(label: "q2d"),
-      new ChartColumnSpec(label: "q2e")
-    ];
+  q9() async {
+    Map json = await getJSONForQuestion("9");
+    String questionNumber = "9";
 
     List<Map> tranches = <Map>[];
     json.forEach((String tranche, Map questions) {
@@ -101,6 +118,213 @@ class MainApp extends PolymerElement {
       });
       tranches.add(well_formated);
     });
+
+    String qxa = "q${questionNumber}a";
+    String qxb = "q${questionNumber}b";
+    String qxc = "q${questionNumber}c";
+    String qxd = "q${questionNumber}d";
+    String qxe = "q${questionNumber}e";
+
+    Iterable ODC = [
+      new ChartColumnSpec(label: "Question", type: ChartColumnSpec.TYPE_STRING),
+      new ChartColumnSpec(label: qxa),
+      new ChartColumnSpec(label: qxb),
+      new ChartColumnSpec(label: qxc),
+      new ChartColumnSpec(label: qxd),
+      new ChartColumnSpec(label: qxe)
+    ];
+
+    Iterable ORDINAL_DATA = [
+      [tranches[0]["name"], tranches[0][qxa], tranches[0][qxb], tranches[0][qxc], tranches[0][qxd], tranches[0][qxe]],
+      [tranches[2]["name"], tranches[2][qxa], tranches[2][qxb], tranches[2][qxc], tranches[2][qxd], tranches[2][qxe]],
+      [tranches[1]["name"], tranches[1][qxa], tranches[1][qxb], tranches[1][qxc], tranches[1][qxd], tranches[1][qxe]],
+      [tranches[3]["name"], tranches[3][qxa], tranches[3][qxb], tranches[3][qxc], tranches[3][qxd], tranches[3][qxe]]
+    ];
+
+    var wrapper = this.$["security"],
+    areaHost = wrapper.querySelector('.chart-host'),
+    legendHost = wrapper.querySelector('.chart-legend-host');
+
+    var series1 = new ChartSeries("one", [1, 2, 3, 4, 5], new BarChartRenderer());
+    ChartConfig config = new ChartConfig([series1], [0])
+      ..legend = new ChartLegend(legendHost);
+    ChartData data = new ChartData(ODC, ORDINAL_DATA);
+    ChartState state = new ChartState();
+
+    var area = new CartesianArea(areaHost, data, config, state: state);
+
+    createDefaultCartesianBehaviors().forEach((behavior) {
+      area.addChartBehavior(behavior);
+    });
+    area.draw();
+  }
+
+  commonQ5Q6Q7Q8Q10(Map json, String id, int questionNumber) {
+
+    String qxa = "q${questionNumber}a";
+    String qxb = "q${questionNumber}b";
+    String qxc = "q${questionNumber}c";
+    String qxd = "q${questionNumber}d";
+    String qxe = "q${questionNumber}e";
+
+    Iterable ODC = [
+      new ChartColumnSpec(label: "Question", type: ChartColumnSpec.TYPE_STRING),
+      new ChartColumnSpec(label: "Nb. Response")
+    ];
+
+    Iterable ORDINAL_DATA = [
+      [qxa, int.parse(json[qxa])],
+      [qxb, int.parse(json[qxb])],
+      [qxc, int.parse(json[qxc])],
+      [qxd, int.parse(json[qxd])],
+      [qxe, int.parse(json[qxe])]
+    ];
+
+    var wrapper = this.$[id],
+    areaHost = wrapper.querySelector('.chart-host'),
+    legendHost = wrapper.querySelector('.chart-legend-host');
+
+    var series = new ChartSeries("one", [1], new BarChartRenderer()),
+    config = new ChartConfig([series], [0])
+      ..legend = new ChartLegend(legendHost),
+    data = new ChartData(ODC, ORDINAL_DATA),
+    state = new ChartState();
+
+    var area = new CartesianArea(areaHost, data, config, state: state);
+
+    createDefaultCartesianBehaviors().forEach((behavior) {
+      area.addChartBehavior(behavior);
+    });
+    area.draw();
+  }
+
+  q10() async {
+    Map json = await getJSONForQuestion("10");
+    commonQ5Q6Q7Q8Q10(json, "sustainable_development", 10);
+  }
+
+  q8() async {
+    Map json = await getJSONForQuestion("8");
+    commonQ5Q6Q7Q8Q10(json, "the_school", 8);
+  }
+
+  q7() async {
+    Map json = await getJSONForQuestion("7");
+    commonQ5Q6Q7Q8Q10(json, "improving_care_to_people", 7);
+  }
+
+  q6() async {
+    Map json = await getJSONForQuestion("6");
+    commonQ5Q6Q7Q8Q10(json, "education", 6);
+  }
+
+  q5() async {
+    Map json = await getJSONForQuestion("5");
+    commonQ5Q6Q7Q8Q10(json, "culture_and_leisure", 5);
+  }
+
+  commonQ3AndQ4(Map json, String id, int questionNumber) {
+    Map infosStudent = <String, int>{};
+    Map infosPen = <String, int>{};
+    Map infosAuth = <String, int>{};
+
+    json.forEach((String key, Map value) {
+      if (key == "Student") {
+        value.forEach((String key, String value) {
+          if (key != "max") {
+            infosStudent[key] = int.parse(value);
+          }
+        });
+      } else if (key == "Pensionr") {
+        value.forEach((String key, String value) {
+          if (key != "max") {
+            infosPen[key] = int.parse(value);
+          }
+        });
+      } else {
+        value.forEach((String key, String value) {
+          if (key != "max") {
+            if (!infosAuth.containsKey(key)) {
+              infosAuth[key] = 0;
+            }
+            infosAuth[key] += int.parse(value);
+          }
+        });
+      }
+    });
+
+    String qxa = "q${questionNumber}a";
+    String qxb = "q${questionNumber}b";
+    String qxc = "q${questionNumber}c";
+    String qxd = "q${questionNumber}d";
+    String qxe = "q${questionNumber}e";
+
+    Iterable ODC = [
+      new ChartColumnSpec(label: "", type: ChartColumnSpec.TYPE_STRING),
+      new ChartColumnSpec(label: qxa),
+      new ChartColumnSpec(label: qxb),
+      new ChartColumnSpec(label: qxc),
+      new ChartColumnSpec(label: qxd),
+      new ChartColumnSpec(label: qxe)
+    ];
+
+    Iterable ORDINAL_DATA = [
+      ["Student", infosStudent[qxa], infosStudent[qxb], infosStudent[qxc], infosStudent[qxd], infosStudent[qxe]],
+      ["Pensionr", infosPen[qxa], infosPen[qxb], infosPen[qxc], infosPen[qxd], infosPen[qxe]],
+      ["Actif", infosAuth[qxa], infosAuth[qxb], infosAuth[qxc], infosAuth[qxd], infosAuth[qxe]]
+    ];
+
+    var wrapper = this.$[id],
+    areaHost = wrapper.querySelector('.chart-host'),
+    legendHost = wrapper.querySelector('.chart-legend-host');
+
+    var series = new ChartSeries("one", [1, 2, 3, 4, 5], new BarChartRenderer()),
+    config = new ChartConfig([series], [0])
+      ..legend = new ChartLegend(legendHost),
+    data = new ChartData(ODC, ORDINAL_DATA),
+    state = new ChartState();
+
+    var area = new CartesianArea(areaHost, data, config, state: state);
+
+    createDefaultCartesianBehaviors().forEach((behavior) {
+      area.addChartBehavior(behavior);
+    });
+    area.draw();
+  }
+
+  q4() async {
+    Map json = await getJSONForQuestion("4");
+    commonQ3AndQ4(json, "communication", 4);
+  }
+
+  q3() async {
+    Map json = await getJSONForQuestion("3");
+    commonQ3AndQ4(json, "live_making_common_places", 3);
+  }
+
+  q2() async {
+    Map json = await getJSONForQuestion("2");
+
+    List<Map> tranches = <Map>[];
+    json.forEach((String tranche, Map questions) {
+      Map well_formated = {};
+      well_formated["name"] = tranche;
+      questions.forEach((String key, String value) {
+        if (key != "max") {
+          well_formated[key] = int.parse(value);
+        }
+      });
+      tranches.add(well_formated);
+    });
+
+    Iterable ODC = [
+      new ChartColumnSpec(label: "Number of years", type: ChartColumnSpec.TYPE_STRING),
+      new ChartColumnSpec(label: "q2a"),
+      new ChartColumnSpec(label: "q2b"),
+      new ChartColumnSpec(label: "q2c"),
+      new ChartColumnSpec(label: "q2d"),
+      new ChartColumnSpec(label: "q2e")
+    ];
 
     Iterable ORDINAL_DATA = [
       [tranches[2]["name"], tranches[2]["q2a"], tranches[2]["q2b"], tranches[2]["q2c"], tranches[2]["q2d"], tranches[2]["q2e"]],
@@ -198,22 +422,6 @@ class MainApp extends PolymerElement {
           maxCountry[information["max"]] += int.parse(information[information["max"]]);
           break;
 
-      }
-    });
-
-    String questionMaxCity = "";
-    int tmp = 0;
-    maxCity.forEach((String question, int numberOfVote) {
-      if (numberOfVote > tmp) {
-        questionMaxCity = question;
-      }
-    });
-
-    String questionMaxCountry = "";
-    tmp = 0;
-    maxCountry.forEach((String question, int numberOfVote) {
-      if (numberOfVote > tmp) {
-        questionMaxCountry = question;
       }
     });
 
