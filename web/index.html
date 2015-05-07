@@ -12,23 +12,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DSA</title>
 
+  <link rel="import" href="../packages/dsa/main-app.html">
+
    <link rel="stylesheet" href="main.css">
 </head>
 
-<body>
+<body unresolved>
 
+  <main-app></main-app>
 
-  <div class="chart-wrapper" id="simple-bar-chart">
-    <div class="chart-title-wrapper">
-      <div class="chart-title">Simple bar chart</div>
-    </div>
-    <div class="chart-host-wrapper">
-      <div class="chart-host" dir="ltr"></div>
-      <div class="chart-legend-host"></div>
-    </div>
-  </div>
-
-  <script type="application/dart" src="main.dart"></script>
+  <script type="application/dart">export 'package:polymer/init.dart';</script>
   <script data-pub-inline src="packages/browser/dart.js"></script>
 </body>
 </html>

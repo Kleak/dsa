@@ -1,12 +1,17 @@
-name: 'untitled'
+name: 'dsa'
 version: 0.0.1
 description: >
-  A mobile-friendly web app with routing, responsive CSS, and (optional) Sass
-  support.
-#author: <your name> <email@example.com>
-#homepage: https://www.example.com
+
 environment:
   sdk: '>=1.0.0 <2.0.0'
 dependencies:
   browser: '>=0.10.0 <0.11.0'
-  charted: 0.2.3
+  polymer: 0.16.3+1
+  core_elements: 0.7.1+2
+  paper_elements: 0.7.1
+  http: 0.11.2
+  charted:
+    git: git@github.com:google/charted.git
+transformers:
+- polymer:
+    entry_points: web/index.html

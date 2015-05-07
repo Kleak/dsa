@@ -1,0 +1,285 @@
+<link rel="import" href="../../packages/polymer/polymer.html">
+
+<link rel="import" href="../../packages/core_elements/core_selector.html">
+<link rel="import" href="../../packages/core_elements/core_animated_pages.html">
+
+<polymer-element name="main-app">
+    <template>
+
+        <style>
+            @import "../packages/charted/charts/themes/quantum_theme.css";
+
+            :host {
+                display: block;
+            }
+
+            #header {
+                background: #3f51b5;
+                height: 200px;
+                overflow-y: auto;
+            }
+
+            .item {
+                color: black;
+                font-weight: bold;
+                height: 156px;
+                margin: 20px;
+                text-align: center;
+                cursor: pointer;
+                padding-left: 10px;
+                padding-right: 10px;
+                border: 2px solid #3f51b5;
+                transition: .5s linear border;
+            }
+
+            .item.core-selected {
+                border: 2px solid white;
+            }
+
+            .text_center {
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+                -webkit-transform: translateY(-50%);
+                transform-style: preserve-3d;
+                -webkit-transform-style: preserve-3d;
+            }
+
+            #content {
+                width: 100%;
+            }
+
+            .chart {
+                background: #efefef;
+                width: 90%;
+                border-radius: 5px;
+                margin: 20px auto auto;
+            }
+
+            .chart-wrapper {
+                padding: 20px;
+                margin: auto;
+                width: 800px;
+            }
+
+            .chart-controls {
+                border-bottom: 1px solid #d3d3d3;
+                background-color: #eee;
+            }
+        </style>
+
+        <div layout vertical>
+
+            <core-selector selected="{{selectedItem}}" valueattr="label" id="header" layout horizontal>
+
+                <div label="parks_and_green_spaces" class="item">
+                    <div class="text_center">
+                        Parks & Green spaces
+                    </div>
+                </div>
+
+                <div label="diversity_in_housing_supply" class="item">
+                    <div class="text_center">
+                        Diversity in housing supply
+                    </div>
+                </div>
+
+                <div label="live_making_common_places" class="item">
+                    <div class="text_center">
+                        Live Making Common Places
+                    </div>
+                </div>
+
+                <div label="communication" class="item">
+                    <div class="text_center">
+                        Communication
+                    </div>
+                </div>
+
+                <div label="culture_and_leisure" class="item">
+                    <div class="text_center">
+                        Culture and Leisure
+                    </div>
+                </div>
+
+                <div label="education" class="item">
+                    <div class="text_center">
+                        Education
+                    </div>
+                </div>
+
+                <div label="improving_care_to_people" class="item">
+                    <div class="text_center">
+                        Improving care to people
+                    </div>
+                </div>
+
+                <div label="the_school" class="item">
+                    <div class="text_center">
+                        The School
+                    </div>
+                </div>
+
+                <div label="security" class="item">
+                    <div class="text_center">
+                        Security
+                    </div>
+                </div>
+
+                <div label="sustainable_development" class="item">
+                    <div class="text_center">
+                        Sustainable development
+                    </div>
+                </div>
+
+            </core-selector>
+
+            <core-animated-pages id="content" selected="{{selectedItem}}" valueattr="label">
+
+                <section label="parks_and_green_spaces">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="parks_and_green_spaces">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">Most given answer, depending on living area.</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section label="diversity_in_housing_supply">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="diversity_in_housing_supply">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">Most given answer, depending on how many years people spent in Väsby</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section label="live_making_common_places">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="live_making_common_places">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">Most given answer, depending on their main activity</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section label="communication">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="communication">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">Most given answer, depending on their main activity</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section label="culture_and_leisure">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="culture_and_leisure">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">Global overview on the Culture and leisure subject</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section label="education">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="education">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">What is the most important for peoples under 55 years old</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section label="improving_care_to_people">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="improving_care_to_people">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">Global overview</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section label="the_school">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="the_school">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">What is the most important for peoples under 55 years old</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section label="security">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="security">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">Opinion of men and women about Security</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section label="sustainable_development">
+                    <div class="chart">
+                        <div class="chart-wrapper" id="sustainable_development">
+                            <div class="chart-title-wrapper">
+                                <div class="chart-title">Most claimed answers about the sustainable development</div>
+                            </div>
+                            <div class="chart-host-wrapper">
+                                <div class="chart-host" dir="ltr"></div>
+                                <div class="chart-legend-host"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </core-animated-pages>
+
+        </div>
+
+    </template>
+    <script type="application/dart" src="main_app.dart"></script>
+</polymer-element>
